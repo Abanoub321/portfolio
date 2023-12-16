@@ -5,6 +5,14 @@ import Hero from '@components/Hero.astro';
 import Projects from '@components/Projects.astro';
 import BackToTop from '@components/ui/BackToTop.astro';
 import Layout from '@layouts/Layout.astro';
+import Page from 'storyblok/Page.astro';
+import { useStoryblokApi } from '@storyblok/astro';
+
+const storyblokApi = useStoryblokApi();
+const { data } = await storyblokApi.get('cdn/stories/home', {
+	version: 'draft',
+});
+const content = data.story.content;
 ---
 
 <Layout>
@@ -13,6 +21,9 @@ import Layout from '@layouts/Layout.astro';
 		<About />
 		<Projects />
 		<Contact />
+		<!-- <StoryblokComponent blok={content} /> -->
+
+		<Page blok={content} />
 		<BackToTop />
 	</main>
 </Layout>
